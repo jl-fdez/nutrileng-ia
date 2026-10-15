@@ -9,6 +9,11 @@
   <img src="https://img.shields.io/badge/Version-v0.1.0%20Beta-FF9500?style=for-the-badge" alt="Beta v0.1.0" />
 </p>
 
+> ### 💡 ¿Qué es NutriLens AI?
+> **NutriLens AI (NIA)** es un asistente nutricional bioadaptativo para dispositivos móviles (**Android e iOS**) diseñado para simplificar el registro de alimentos mediante **Inteligencia Artificial Multimodal (Google Gemini 1.5)** y almacenamiento local **SQLite**.
+> 
+> Permite escanear comidas con la cámara o describirlas por texto/dictado, detectando ingredientes y **ajustando con precisión matemática las calorías y macronutrientes según notas de preparación invisibles** (por ejemplo: restar calorías por café sin azúcar o aderezos sin grasa). Todo sincronizado con un motor clínico basado en la fórmula **Mifflin-St Jeor** para mantener tu balance calórico diario y semanal de forma 100% privada y offline.
+
 ---
 
 ## 📑 Tabla de Contenidos
