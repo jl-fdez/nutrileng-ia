@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nutrilengia/data/datasources/app_database.dart';
 import 'package:nutrilengia/data/models/meal_item.dart';
-import 'package:nutrilengia/data/models/user_profile.dart';
 import 'package:nutrilengia/data/repositories/nutrition_repository.dart';
+
 import 'test_helpers.dart';
 
 void main() {
@@ -28,33 +28,36 @@ void main() {
       expect(profile.targetWeightKg, equals(62.0));
     });
 
-    test('updateUserProfile persists changes and notifies reactive listeners', () async {
-      final currentProfile = await repository.getUserProfile();
-      final updatedProfile = currentProfile.copyWith(
-        weightKg: 67.8,
-        streakDays: 8,
-      );
+    test(
+      'updateUserProfile persists changes and notifies reactive listeners',
+      () async {
+        final currentProfile = await repository.getUserProfile();
+        final updatedProfile = currentProfile.copyWith(
+          weightKg: 67.8,
+          streakDays: 8,
+        );
 
-      bool listenerNotified = false;
-      void listener() {
-        listenerNotified = true;
-      }
+        bool listenerNotified = false;
+        void listener() {
+          listenerNotified = true;
+        }
 
-      repository.addListener(listener);
+        repository.addListener(listener);
 
-      await repository.updateUserProfile(updatedProfile);
+        await repository.updateUserProfile(updatedProfile);
 
-      expect(listenerNotified, isTrue);
+        expect(listenerNotified, isTrue);
 
-      final fetched = await repository.getUserProfile();
-      expect(fetched.weightKg, equals(67.8));
-      expect(fetched.streakDays, equals(8));
+        final fetched = await repository.getUserProfile();
+        expect(fetched.weightKg, equals(67.8));
+        expect(fetched.streakDays, equals(8));
 
-      repository.removeListener(listener);
+        repository.removeListener(listener);
 
-      // Restore original profile for subsequent tests
-      await repository.updateUserProfile(currentProfile);
-    });
+        // Restore original profile for subsequent tests
+        await repository.updateUserProfile(currentProfile);
+      },
+    );
 
     test('Meal CRUD lifecycle (insert, retrieve, delete) with reactive notification', () async {
       final testDate = DateTime(2026, 10, 15, 14, 0);
@@ -112,43 +115,50 @@ void main() {
       expect(afterDeleteMeals.any((m) => m.id == insertedId), isFalse);
     });
 
-    test('getDailySummary aggregates total calories and macronutrients correctly', () async {
-      final now = DateTime.now();
-      final summary = await repository.getDailySummary(now);
+    test(
+      'getDailySummary aggregates total calories and macronutrients correctly',
+      () async {
+        final now = DateTime.now();
+        final summary = await repository.getDailySummary(now);
 
-      expect(summary.containsKey('consumed_calories'), isTrue);
-      expect(summary.containsKey('target_calories'), isTrue);
-      expect(summary.containsKey('remaining_calories'), isTrue);
-      expect(summary.containsKey('carbs_consumed'), isTrue);
-      expect(summary.containsKey('protein_consumed'), isTrue);
-      expect(summary.containsKey('fat_consumed'), isTrue);
-      expect(summary.containsKey('meals'), isTrue);
+        expect(summary.containsKey('consumed_calories'), isTrue);
+        expect(summary.containsKey('target_calories'), isTrue);
+        expect(summary.containsKey('remaining_calories'), isTrue);
+        expect(summary.containsKey('carbs_consumed'), isTrue);
+        expect(summary.containsKey('protein_consumed'), isTrue);
+        expect(summary.containsKey('fat_consumed'), isTrue);
+        expect(summary.containsKey('meals'), isTrue);
 
-      final consumed = summary['consumed_calories'] as int;
-      final target = summary['target_calories'] as int;
-      final remaining = summary['remaining_calories'] as int;
+        final consumed = summary['consumed_calories'] as int;
+        final target = summary['target_calories'] as int;
+        final remaining = summary['remaining_calories'] as int;
 
-      expect(consumed, isNonNegative);
-      expect(target, isPositive);
-      expect(remaining, isNonNegative);
-    });
+        expect(consumed, isNonNegative);
+        expect(target, isPositive);
+        expect(remaining, isNonNegative);
+      },
+    );
 
-    test('getWeeklyMetrics computes 7-day strip and metabolic weekly metrics', () async {
-      final referenceDate = DateTime.now();
-      final weeklyMetrics = await repository.getWeeklyMetrics(referenceDate);
+    test(
+      'getWeeklyMetrics computes 7-day strip and metabolic weekly metrics',
+      () async {
+        final referenceDate = DateTime.now();
+        final weeklyMetrics = await repository.getWeeklyMetrics(referenceDate);
 
-      expect(weeklyMetrics.containsKey('average_calories'), isTrue);
-      expect(weeklyMetrics.containsKey('total_deficit'), isTrue);
-      expect(weeklyMetrics.containsKey('days_data'), isTrue);
+        expect(weeklyMetrics.containsKey('average_calories'), isTrue);
+        expect(weeklyMetrics.containsKey('total_deficit'), isTrue);
+        expect(weeklyMetrics.containsKey('days_data'), isTrue);
 
-      final daysData = weeklyMetrics['days_data'] as List<Map<String, dynamic>>;
-      expect(daysData.length, equals(7));
+        final daysData =
+            weeklyMetrics['days_data'] as List<Map<String, dynamic>>;
+        expect(daysData.length, equals(7));
 
-      // Days of week labels: L, M, X, J, V, S, D
-      final expectedLabels = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-      for (int i = 0; i < 7; i++) {
-        expect(daysData[i]['day_label'], equals(expectedLabels[i]));
-      }
-    });
+        // Days of week labels: L, M, X, J, V, S, D
+        final expectedLabels = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+        for (int i = 0; i < 7; i++) {
+          expect(daysData[i]['day_label'], equals(expectedLabels[i]));
+        }
+      },
+    );
   });
 }
