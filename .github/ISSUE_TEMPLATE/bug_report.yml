@@ -1,0 +1,103 @@
+name: 🐛 Reporte de Error (Bug Report)
+description: Reporta un error, comportamiento inesperado o fallo en la aplicación móvil NutriLens AI.
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### ¡Gracias por ayudar a perfeccionar NutriLens AI (NIA)! 🥑
+        Proporciona información detallada sobre el dispositivo móvil (Android o iOS) y los pasos exactos para reproducir la falla.
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Plataforma afectada
+      description: NutriLens AI es una aplicación móvil nativa para Android e iOS.
+      options:
+        - Android
+        - iOS
+        - Ambas plataformas (Android e iOS)
+    validations:
+      required: true
+
+  - type: input
+    id: device-info
+    attributes:
+      label: Dispositivo y versión del Sistema Operativo
+      description: Modelo del teléfono o emulador y versión exacta del SO.
+      placeholder: "Ej: Samsung Galaxy S23 (Android 14) / iPhone 14 Pro (iOS 17.4) / Pixel 7 Emulator (API 34)"
+    validations:
+      required: true
+
+  - type: input
+    id: app-version
+    attributes:
+      label: Versión o commit de la aplicación
+      description: Indica la versión de la app o el hash del commit donde ocurre.
+      placeholder: "Ej: v0.1.0 Beta (commit a1b2c3d)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Descripción del fallo
+      description: Explica de manera clara y concisa en qué consiste el problema.
+      placeholder: "Ej: Al presionar 'Guardar Comida' en modo avión, la vista previa no persiste inmediatamente en la base de datos local SQLite."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Pasos detallados para reproducir el error
+      description: Enumera paso a paso cómo recrear el comportamiento anómalo.
+      placeholder: |
+        1. Abrir la aplicación y navegar a la pestaña 'Escanear'.
+        2. Tomar una foto a un plato de comida o seleccionar de la galería.
+        3. Añadir una nota de preparación invisible (ej: 'sin aceite ni aderezo').
+        4. Tocar el botón 'Analizar con IA'.
+        5. Observar el error que aparece en pantalla...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-actual
+    attributes:
+      label: Comportamiento esperado vs. actual
+      description: ¿Qué debería haber ocurrido según las especificaciones y qué ocurrió en su lugar?
+      placeholder: |
+        - Comportamiento esperado: El motor offline algorítmico debía calcular los macros y guardar el registro en SQLite sin interrupción.
+        - Comportamiento actual: La aplicación muestra un modal en blanco o un spinner infinito.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs-trace
+    attributes:
+      label: Trazas de error y logs de Flutter / Sistema
+      description: Pega las trazas de consola (`flutter run` o logcat/Xcode) si dispones de ellas.
+      render: shell
+      placeholder: "Pega aquí los logs de error o excepciones de Flutter..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: visual-evidence
+    attributes:
+      label: Capturas de pantalla o grabaciones
+      description: Adjunta imágenes o videos que evidencien el problema táctil, visual o de renderizado.
+      placeholder: Arrastra imágenes o pega enlaces a videos/GIFs...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: verifications
+    attributes:
+      label: Verificaciones de control
+      options:
+        - label: "He buscado en los Issues existentes y confirmado que este error no ha sido reportado previamente."
+          required: true
+        - label: "He reproducido este problema en la rama `main` más reciente."
+          required: false

@@ -1,0 +1,70 @@
+name: 💡 Propuesta de Funcionalidad (Feature Proposal)
+description: Propón una nueva funcionalidad, algoritmo nutricional o mejora en la experiencia de usuario.
+title: "[FEAT]: "
+labels: ["enhancement", "proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### ¡Gracias por proponer una mejora para NutriLens AI (NIA)! 🥑
+        Toda propuesta de funcionalidad debe ser discutida y evaluada por el arquitecto y mantenedor principal (**Ing. Jorge Luis Fernández**) antes de comenzar el desarrollo o enviar un Pull Request.
+
+  - type: input
+    id: feature-title
+    attributes:
+      label: Título breve de la funcionalidad
+      description: Un resumen conciso y claro de lo que deseas proponer.
+      placeholder: "Ej: Inclusión de micronutrientes esenciales (Sodio, Fibra y Potasio) en el reporte clínico PDF"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción detallada de la propuesta
+      description: Explica cómo funcionaría y qué necesidad cubre dentro de la aplicación móvil.
+      placeholder: Describe qué hace la funcionalidad, cómo interactúa el usuario y cómo se integra con el flujo actual...
+    validations:
+      required: true
+
+  - type: textarea
+    id: clinical-technical-value
+    attributes:
+      label: Valor nutricional y/o técnico
+      description: ¿Qué beneficio clínico, metabólico (fórmulas bioadaptativas), precisión en IA (Gemini 1.5) o rendimiento aporta a NutriLens AI?
+      placeholder: Justificación metabólica (Mifflin-St Jeor), optimización en SQLite, precisión multimodal o mejora de latencia...
+    validations:
+      required: true
+
+  - type: textarea
+    id: visual-mockup
+    attributes:
+      label: Bocetos, capturas o mockups (Si aplica)
+      description: Adjunta bocetos, diagramas o referencias visuales bajo el sistema de diseño Vitality Glassmorphism.
+      placeholder: Enlaces a Figma, imágenes o descripción del layout visual móvil...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: owner-approval-status
+    attributes:
+      label: Estado de aprobación del dueño del repositorio
+      description: ¿Ha sido discutida o pre-aprobada previamente con el Ing. Jorge Luis Fernández?
+      options:
+        - "Pendiente de revisión inicial por el Ing. Jorge Luis Fernández"
+        - "Consultada previamente y en espera de validación formal"
+        - "Aprobada en discusión previa para su implementación"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: governance-commitments
+    attributes:
+      label: Compromiso con las políticas de gobernanza
+      options:
+        - label: "Entiendo que no debo abrir un Pull Request ni iniciar codificación hasta que esta propuesta sea aprobada formalmente por el Ing. Jorge Luis Fernández."
+          required: true
+        - label: "Confirmo que esta funcionalidad respeta la Licencia Gratuita de Uso No Comercial de NutriLens AI."
+          required: true
+        - label: "Acepto seguir la arquitectura Clean Architecture / Feature-First y el sistema de diseño Vitality Glassmorphism."
+          required: true
